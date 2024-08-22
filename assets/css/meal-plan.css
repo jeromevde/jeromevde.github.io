@@ -1,0 +1,29 @@
+.meal-plan {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+  }
+  
+  .meal {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    width: 30%;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  
+  .meal:hover {
+    transform: scale(1.05);
+    background-color: #f0f0f0;
+  }
+  
+  .meal-info {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    display: none;
+    text-align: center;
+  }
