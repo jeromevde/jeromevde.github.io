@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Olive Oile
+title: Olive Oil
 categories: misc
 ---
 \# Intro
