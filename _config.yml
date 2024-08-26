@@ -4,6 +4,7 @@ author:
   email: your-email@domain.com
 
 
+
 #baseurl: "/jekyll-blog" # Add this line
 
 # The `>` after `description:` means to ignore line-breaks until next key.
@@ -26,6 +27,8 @@ theme: minima
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+
+plugins_dir: _plugins
 
 # Theme-specific settings
 
