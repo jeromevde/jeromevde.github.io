@@ -4,7 +4,7 @@ author:
   email: your-email@domain.com
 
 
-baseurl: "/jekyll-blog" # Add this line
+#baseurl: "/jekyll-blog" # Add this line
 
 # The `>` after `description:` means to ignore line-breaks until next key.
 # If you want to omit the line-break after the end of text, use `>-` instead.
