@@ -1,6 +1,4 @@
-# so this will basically transform any markdown image link 
-# from ![alt](/path/to/image.jpg) to ![alt]({{ /path/to/image.jpg | relative_url }})
-# allowing to keep existing markdowns but make them work with another base_url
+# _plugins/relative_url_filter.rb
 
 module Jekyll
     class RelativeUrlFilter < Jekyll::Generator
@@ -19,7 +17,11 @@ module Jekyll
       end
   
       def process_content(content)
-        content.gsub(/!\[(.*?)\]\((\/.*?)\)/, '![\1]({{\2 | relative_url}})')
+        # Process image URLs
+        content = content.gsub(/!\[(.*?)\]\((\/.*?)\)/, '![\1]({{\2 | relative_url}})')
+        # Process other URLs (e.g., links)
+        content = content.gsub(/\[(.*?)\]\((\/.*?)\)/, '[\1]({{\2 | relative_url}})')
+        content
       end
     end
   end
