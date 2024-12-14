@@ -2,7 +2,7 @@
 
 set -e
 
-script/build
+bundle exec jekyll build
 
 if test -e "./_site/index.html";then
   echo "It builds!"

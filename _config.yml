@@ -1,1 +1,3 @@
-baseurl: "/jekyll-blog" # Add this line
+baseurl: "/jekyll-blog"
+
+permalink: :year_:month_:day_:title/
