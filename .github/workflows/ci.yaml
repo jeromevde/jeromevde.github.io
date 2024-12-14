@@ -1,4 +1,6 @@
 name: Continuous Integration
+
+# Trigger the workflow on push or pull request events to the master branch
 on:
   push:
     branches:
@@ -6,22 +8,34 @@ on:
   pull_request:
     branches:
       - master
+
 jobs:
   build:
     name: "Test with Jekyll ${{ matrix.jekyll }}"
     runs-on: "ubuntu-latest"
+    
+    # Define a matrix strategy to test multiple versions of Jekyll
+    # Ensure max compatibility of the website
     strategy:
       matrix:
         jekyll: ["~> 3.9", "~> 4.2"]
+    
+    # Set environment variable for Jekyll version
     env:
       JEKYLL_VERSION: ${{ matrix.jekyll }}
+    
     steps:
+      # Step 1: Checkout the repository code (standard action available in the GitHub Marketplace)
       - name: Checkout Repository
         uses: actions/checkout@v2
+      
+      # Step 2: Set up Ruby environment with version 2.7 and enable bundler cache (also a standard action)
       - name: Set Up Ruby 2.7
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7
           bundler-cache: true
+      
+      # Step 3: Run the tests defined in the cibuild script
       - name: Run tests
         run: .github/workflows/cibuild
