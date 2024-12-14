@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Testosterone
-categories: misc
 ---
 # Age
 
