@@ -20,8 +20,14 @@
 
 
 
-# run locally
+# Run locally
 ```
 kill -9 $(lsof -t -i :4000)
 bundle exec jekyll serve --config _config.local.yml --port 4001
+```
+
+# Cleanup
+```
+# this will break the locally running site
+rm -rf .jekyll-cache _site
 ```
