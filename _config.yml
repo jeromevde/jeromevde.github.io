@@ -1,3 +1,4 @@
 baseurl: "/jekyll-blog"
 
-permalink: :year_:month_:day_:title/
+permalink: :year-:month-:day-:title/
+
