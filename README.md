@@ -31,3 +31,19 @@ bundle exec jekyll serve --config _config.local.yml --port 4001
 # this will break the locally running site
 rm -rf .jekyll-cache _site
 ```
+
+# Blog URL after Deployment
+
+After deploying your blog to GitHub Pages using the custom CI workflow, the URL depends on the repository type:
+
+- **User or Organization Repository**: If the repository is named `<username>.github.io`, the blog will be accessible at `https://<username>.github.io/`.  
+  Example: If the repository is `johndoe.github.io`, the blog URL will be `https://johndoe.github.io/`.
+
+- **Project Repository**: If the repository is not named `<username>.github.io`, the blog will be accessible at `https://<username>.github.io/<repository-name>/`.  
+  Example: If the repository is `my-blog`, the blog URL will be `https://johndoe.github.io/my-blog/`.
+
+- **Custom Domain**: To use a custom domain:
+  1. Add a `CNAME` file to the root of the `gh-pages` branch containing your domain name (e.g., `www.example.com`).
+  2. Configure your DNS settings to point to GitHub Pages' servers.
+
+To verify the deployment URL, go to **Settings** → **Pages** in your repository. The URL will be displayed there.
