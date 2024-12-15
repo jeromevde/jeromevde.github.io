@@ -6,6 +6,7 @@ module Jekyll
         # It specifically processes all files but .md files.
         # =end
         def generate(site)
+            print "site.source: #{site.source}\n"
             post_directory = File.join(site.source, '_posts') # Path to _posts directory
             if Dir.exist?(post_directory)
                 Dir.glob(File.join(post_directory, '**', '*')) do |asset|
