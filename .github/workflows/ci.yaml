@@ -18,7 +18,7 @@ jobs:
     # Ensure max compatibility of the website
     strategy:
       matrix:
-        jekyll: ["~> 3.9", "~> 4.2"]
+        jekyll: ["~> 4.2"]
     
     # Set environment variable for Jekyll version
     env:
