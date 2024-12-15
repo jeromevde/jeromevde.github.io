@@ -4,9 +4,12 @@ module Jekyll
         # =begin
         # This plugin copies assets from the _posts directory to the _site directory.
         # It specifically processes all files but .md files.
+        # As such 
         # =end
         def generate(site)
-            print "site.source: #{site.source}\n"
+            puts "Current directory: #{Dir.pwd}\n"
+            puts "Contents:\n"
+            Dir.entries(Dir.pwd).each { |entry| puts entry }
             post_directory = File.join(site.source, '_posts') # Path to _posts directory
             if Dir.exist?(post_directory)
                 Dir.glob(File.join(post_directory, '**', '*')) do |asset|
