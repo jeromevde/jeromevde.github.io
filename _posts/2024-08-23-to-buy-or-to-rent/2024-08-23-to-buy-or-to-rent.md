@@ -13,7 +13,7 @@
     <button id="download-excel">Download Excel</button>
 
     <script>
-        const excelFilePath = '/assets/Stock_versus_realestate.xlsx'; // Path to your Excel file
+        const excelFilePath = 'Stock_versus_realestate.xlsx'; // Path to your Excel file
 
         // Function to read the Excel file and extract data with formulas
         async function readExcelFile(filePath) {
