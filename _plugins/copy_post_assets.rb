@@ -14,6 +14,9 @@ module Jekyll
                     next if File.extname(asset) == ".md"      # Skip .md files
                     relative_path = asset.sub(post_directory + '/', '') # Get the relative path
                     static_file = Jekyll::StaticFile.new(site, post_directory, "", relative_path)
+                    # Typically, Jekyll::StaticFile.new(site, base, dir, name)
+                    # will copy base/dir/name --> site.dest/dir/name 
+                    # playing with these gives full control over source and destination
                     site.static_files << static_file
                     puts "Marked for future copy: #{asset} to #{File.join(site.dest, relative_path)}"
                 end
