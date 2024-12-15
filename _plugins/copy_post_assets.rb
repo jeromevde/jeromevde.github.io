@@ -7,9 +7,6 @@ module Jekyll
         # As such 
         # =end
         def generate(site)
-            puts "Current directory: #{Dir.pwd}\n"
-            puts "Contents:\n"
-            Dir.entries(Dir.pwd).each { |entry| puts entry }
             post_directory = File.join(site.source, '_posts') # Path to _posts directory
             if Dir.exist?(post_directory)
                 Dir.glob(File.join(post_directory, '**', '*')) do |asset|
@@ -18,7 +15,7 @@ module Jekyll
                     relative_path = asset.sub(post_directory + '/', '') # Get the relative path
                     static_file = Jekyll::StaticFile.new(site, post_directory, "", relative_path)
                     site.static_files << static_file
-                    # puts "Marked for future copy: #{asset} to #{File.join(site.dest, relative_path)}"
+                    puts "Marked for future copy: #{asset} to #{File.join(site.dest, relative_path)}"
                 end
             else
                 puts "No _posts directory found at: #{post_directory}"
