@@ -26,12 +26,13 @@ jobs:
         uses: actions/upload-pages-artifact@v3
 
   deploy:
-    # Deploy the site to GitHub Pages
     runs-on: ubuntu-latest
     needs: build
+    environment:
+      name: github-pages  # This is the required environment for GitHub Pages
     permissions:
-      pages: write
-      id-token: write
+      pages: write        # Required for deploying to GitHub Pages
+      id-token: write     # Required for GitHub OIDC authentication
     steps:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
