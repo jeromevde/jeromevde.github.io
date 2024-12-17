@@ -1,5 +1,3 @@
 baseurl: "/jekyll-blog"
 
 permalink: :year-:month-:day-:title/
-
-gem: jekyll: 4.2.2  # Replace with your desired Jekyll version
