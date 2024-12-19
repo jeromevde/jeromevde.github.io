@@ -1,4 +1,10 @@
 source "https://rubygems.org"
 gemspec
-# Hardcode Jekyll to version 4.2.0
-gem "jekyll", "~> 4.2.2"
+
+gem "jekyll", "~> 4.3.3"
+
+# Add missing gems
+gem "csv"
+gem "base64"
+gem "bigdecimal"
+gem "logger"
