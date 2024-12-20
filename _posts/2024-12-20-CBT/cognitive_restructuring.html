@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decatastrophizing Worksheet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+        }
+        .intro {
+            margin-bottom: 20px;
+        }
+        .questions-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Space between questions */
+            margin-bottom: 20px;
+            position: relative; /* For positioning the remove button */
+        }
+        .question {
+            flex: 1 1 calc(20% - 20px); /* Adjust for 5 columns, accounting for gap */
+            min-width: 200px; /* Minimum width for readability */
+            position: relative;
+        }
+        .question label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .question input[type="text"], .question textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            height: 80px; /* Matches height for textareas and inputs */
+        }
+        .question input[type="number"] {
+            width: 50px;
+            padding: 5px;
+            margin-right: 5px; /* Space before percentage symbol */
+        }
+        .percent {
+            margin-left: 5px;
+            vertical-align: middle;
+        }
+        .remove-button {
+            background-color: #f44336;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        .add-row {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Decatastrophizing</h1>
+        <div class="intro">
+            <p>Cognitive distortions are irrational thoughts that have the power to influence how you feel. Everyone has some cognitive distortions—they're a normal part of being human. However, when cognitive distortions are too extreme, they can be harmful.</p>
+            <p>One common type of cognitive distortion is called <strong>catastrophizing</strong>. When catastrophizing, the importance of a problem is exaggerated, or the worst possible outcome is assumed to be inevitable. By learning to question your own thoughts, you can correct many of these cognitive distortions.</p>
+        </div>
+        <div id="questionsContainer">
+        </div>
+        <button class="add-row" id="addRowButton">Add Row</button>
+    </div>
+
+    <script>
+        function createQuestionRow(rowCount) {
+            let row = document.createElement('div');
+            row.className = 'questions-container';
+
+            let questions = [
+                { id: "worry_" + rowCount, label: "What are you worried about?", type: "textarea" },
+                { id: "reality_" + rowCount, label: "How likely is it that your worry will come true? Give examples of past experiences, or other evidence, to support your answer.", type: "textarea" },
+                { id: "worst_" + rowCount, label: "If your worry does come true, what's the worst that could happen?", type: "textarea" },
+                { id: "likely_" + rowCount, label: "If your worry does come true, what's most likely to happen?", type: "textarea" },
+                { id: "ok_" + rowCount, label: "If your worry comes true, what are the chances you'll be okay...", type: "group", 
+                  subQuestions: [
+                    { id: "week_" + rowCount, label: "In one week:", type: "number" },
+                    { id: "month_" + rowCount, label: "In one month:", type: "number" },
+                    { id: "year_" + rowCount, label: "In one year:", type: "number" }
+                  ]
+                }
+            ];
+
+            questions.forEach((question, index) => {
+                let questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+
+                if (question.type === "group") {
+                    let label = document.createElement('label');
+                    label.htmlFor = question.id;
+                    label.textContent = question.label;
+                    questionDiv.appendChild(label);
+
+                    let groupDiv = document.createElement('div'); // Container for grouped inputs
+                    question.subQuestions.forEach(sub => {
+                        let subLabel = document.createElement('span');
+                        subLabel.textContent = sub.label;
+                        groupDiv.appendChild(subLabel);
+
+                        let input = document.createElement('input');
+                        input.type = sub.type;
+                        input.id = sub.id;
+                        input.name = sub.id;
+                        input.min = 0;
+                        input.max = 100;
+                        groupDiv.appendChild(input);
+                        groupDiv.appendChild(document.createTextNode('% '));
+                    });
+
+                    questionDiv.appendChild(groupDiv);
+                } else {
+                    let label = document.createElement('label');
+                    label.htmlFor = question.id;
+                    label.textContent = question.label;
+                    questionDiv.appendChild(label);
+
+                    let input;
+                    if (question.type === "textarea") {
+                        input = document.createElement('textarea');
+                    } else {
+                        input = document.createElement('input');
+                        input.type = question.type;
+                    }
+                    input.id = question.id;
+                    input.name = question.id;
+                    questionDiv.appendChild(input);
+                }
+
+                row.appendChild(questionDiv);
+            });
+
+            // Add remove button
+            let removeButton = document.createElement('button');
+            removeButton.className = 'remove-button';
+            removeButton.textContent = 'X';
+            removeButton.addEventListener('click', function() {
+                row.remove();
+            });
+            row.appendChild(removeButton);
+
+            return row;
+        }
+
+        document.getElementById('addRowButton').addEventListener('click', function() {
+            const container = document.getElementById('questionsContainer');
+            let rowCount = container.children.length;
+            container.appendChild(createQuestionRow(rowCount));
+        });
+
+        // Load initial row
+        window.onload = function() {
+            document.getElementById('questionsContainer').appendChild(createQuestionRow(0));
+        };
+    </script>
+</body>
+</html>

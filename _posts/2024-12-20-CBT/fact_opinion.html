@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fact or Opinion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .instructions {
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .remove-button {
+            background-color: #f44336;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 5px;
+        }
+        .add-row {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Fact or Opinion</h1>
+<div class="instructions">
+    <p><strong>Facts</strong> are verifiable statements. <strong>Opinions</strong> are personal interpretations of facts, which differ from person to person.</p>
+    <p>Recognizing the difference can help you gain perspective, see the upside of a situation, improve problem solving, and sometimes reduce disagreements between two people. Here's a list of statements; identify whether each statement is a <em>fact</em> or an <em>opinion</em>.</p>
+</div>
+
+<table id="factOrOpinionTable">
+    <tr>
+        <th>Statement</th>
+        <th>Fact</th>
+        <th>Opinion</th>
+        <th>Action</th>
+    </tr>
+</table>
+<button class="add-row" id="addRowButton">Add Row</button>
+
+<script>
+    function createRow(rowCount) {
+        let row = document.createElement('tr');
+        
+        let statementCell = document.createElement('td');
+        statementCell.textContent = (rowCount + 1) + ". New Statement";
+        row.appendChild(statementCell);
+
+        let factCell = document.createElement('td');
+        let factRadio = document.createElement('input');
+        factRadio.type = 'radio';
+        factRadio.name = 'statement' + rowCount;
+        factRadio.value = 'fact';
+        factCell.appendChild(factRadio);
+        row.appendChild(factCell);
+
+        let opinionCell = document.createElement('td');
+        let opinionRadio = document.createElement('input');
+        opinionRadio.type = 'radio';
+        opinionRadio.name = 'statement' + rowCount;
+        opinionRadio.value = 'opinion';
+        opinionCell.appendChild(opinionRadio);
+        row.appendChild(opinionCell);
+
+        let actionCell = document.createElement('td');
+        let removeButton = document.createElement('button');
+        removeButton.className = 'remove-button';
+        removeButton.textContent = 'X';
+        removeButton.addEventListener('click', function() {
+            row.remove();
+        });
+        actionCell.appendChild(removeButton);
+        row.appendChild(actionCell);
+
+        return row;
+    }
+
+    document.getElementById('addRowButton').addEventListener('click', function() {
+        const table = document.getElementById('factOrOpinionTable');
+        let rowCount = table.rows.length - 1; // Subtract 1 for header row
+        table.appendChild(createRow(rowCount));
+    });
+
+    // Load initial rows
+    window.onload = function() {
+        const table = document.getElementById('factOrOpinionTable');
+        let initialStatements = [
+            "I listened to my friend talk about their bad day.",
+            "I am a good friend.",
+            "I am ugly.",
+            "I have a blemish on my face.",
+            "My boss told me that I did a great job on the project.",
+            "I am a great employee."
+        ];
+
+        initialStatements.forEach((statement, index) => {
+            let row = createRow(index);
+            row.children[0].textContent = (index + 1) + ". " + statement;
+            table.appendChild(row);
+        });
+    };
+</script>
+
+</body>
+</html>
