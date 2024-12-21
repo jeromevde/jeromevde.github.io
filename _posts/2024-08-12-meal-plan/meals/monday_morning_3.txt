@@ -1,3 +1,4 @@
 Smoothie
 
-Banana, Berries, Yogurt. Instructions: Blend all ingredients until smooth.
+
+Blend Banana, Berries, Yogurt and milk until smooth.
