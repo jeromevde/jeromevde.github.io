@@ -3,6 +3,7 @@ let foods_nutrients = null;
 let nutrients = null;
 let loadingDataPromise = null;
 
+
 async function fetchCSV(url) {
     const response = await fetch(url);
     if (!response.ok) {
@@ -40,7 +41,7 @@ async function fetchCSV(url) {
     });
 }
 
-// Load data only if necessary
+
 async function loadData() {
     if (foods === null || foods_nutrients === null || nutrients === null) {
         if (!loadingDataPromise) {
@@ -65,6 +66,7 @@ async function loadData() {
         return loadingDataPromise;
     }
 }
+
 
 async function ensureDataLoaded() {
     if (foods === null || foods_nutrients === null || nutrients === null) {
