@@ -1,20 +1,42 @@
-async function fetchCSV(url) {
-    const response = await fetch(url);
-    if (!response.ok) {
-        throw new Error(`Could not fetch ${url}, received ${response.status}`);
+    async function fetchCSV(url) {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Could not fetch ${url}, received ${response.status}`);
+        }
+        const text = await response.text();
+        const lines = text.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+        const parseCSVLine = (line) => {
+            let result = [];
+            let currentField = '';
+            let inQuotes = false;
+            for (let i = 0; i < line.length; i++) {
+                let c = line[i];
+                if (c === '"' && line[i - 1] !== '\\') {
+                    // Start or end of quoted field
+                    inQuotes = !inQuotes;
+                } else if (c === ',' && !inQuotes) {
+                    // End of non-quoted field
+                    result.push(currentField);
+                    currentField = '';
+                } else {
+                    currentField += c;
+                }
+            }
+            result.push(currentField);
+            return result.map(field => 
+                field.replace(/^"|"$/g, '').replace(/\\"/g, '"').trim() // Remove surrounding quotes and unescape inner quotes
+            );
+        };
+
+        const headers = parseCSVLine(lines[0]);
+        return lines.slice(1).map(line => {
+            const columns = parseCSVLine(line);
+            return headers.reduce((obj, header, index) => {
+                obj[header] = columns[index] || undefined;
+                return obj;
+            }, {});
+        });
     }
-    const text = await response.text();
-    const lines = text.split('\n').map(line => line.trim()).filter(line => line.length > 0); // Remove empty lines
-    const cleanQuotes = str => str.replace(/^"|"$/g, '').trim(); // Remove surrounding quotes
-    const headers = lines[0].split(',').map(header => cleanQuotes(header)); // Extract headers
-    return lines.slice(1).map(line => {
-        const columns = line.split(',').map(col => cleanQuotes(col));
-        return headers.reduce((obj, header, index) => {
-            obj[header] = columns[index] || undefined; // Map columns to headers
-            return obj;
-        }, {});
-    });
-}
 
 async function loadData() {
     const food_nutrient = await fetchCSV('https://jeromevde.github.io/jekyll-blog/2024-08-12-meal-plan/FoodData_Central_October_2024/food_nutrient.csv');
