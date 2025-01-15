@@ -1,0 +1,10 @@
+media: _posts
+content:
+  - name: posts
+    label: Posts
+    type: collection
+    path: _posts
+  - name: config
+    label: Jekyll config
+    type: file
+    path: _config.yml
