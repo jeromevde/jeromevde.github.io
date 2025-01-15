@@ -4,12 +4,12 @@ title: Testosterone
 ---
 # Age
 
-```
-Validated Age-Related Normative Model for Male Total Testosterone Shows Increasing Variance but No Decline after Age 40 Years
-```
+
+[Validated Age-Related Normative Model for Male Total Testosterone Shows Increasing Variance but No Decline after Age 40 Years](https://pmc.ncbi.nlm.nih.gov/articles/PMC4190174/)
+
 
 shows the following graph. Unlike others, they don't necessessarily find an age-related decline, rather an increased variance with age.
 
-![](Kelsey%20et%20Al%20testo%20age.png)
+![](testo_age.jpg)
 
-![](Kelsey%20et%20Al.%20testo%20age%20percentiles.png)
+![](testo_age_percentiles.png)
