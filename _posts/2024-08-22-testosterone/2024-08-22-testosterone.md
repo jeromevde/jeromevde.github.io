@@ -3,6 +3,8 @@ layout: post
 title: Testosterone
 ---
 
+A small overview of factors having been found to be significant determinants of total or free T in men
+
 ## Age
 
 
@@ -23,3 +25,11 @@ title: Testosterone
 ## Social context
 
 ## Sleep
+
+## Stress
+
+## Alcohol
+
+## Toxins
+
+## 
