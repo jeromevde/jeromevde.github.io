@@ -31,5 +31,3 @@ A small overview of factors having been found to be significant determinants of 
 ## Alcohol
 
 ## Toxins
-
-## 
