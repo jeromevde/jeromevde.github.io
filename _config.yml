@@ -1,3 +1,2 @@
-baseurl: "/jekyll-blog"
-
+baseurl: ""
 permalink: :year-:month-:day-:title/
