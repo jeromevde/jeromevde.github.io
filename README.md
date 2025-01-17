@@ -23,10 +23,13 @@
 # Run locally
 ```
 kill -9 $(lsof -t -i :4000)
-bundle exec jekyll serve --config _config.local.yml --port 4001
 ```
 
-or 
+```
+bundle exec jekyll serve  --port 4001
+```
+
+or if you have a nonempty baseurl in your config because the blog is hosted at anoter adress than username.github.io
 
 ```
 bundle exec jekyll serve  --baseurl="" --port 4000
