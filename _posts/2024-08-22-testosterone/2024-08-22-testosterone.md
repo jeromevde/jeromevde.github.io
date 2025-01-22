@@ -26,6 +26,17 @@ A small overview of factors having been found to be significant determinants of 
 
 ## Sleep
 
+[Sleep Duration and Disturbances Were Associated With Testosterone Level, Muscle Mass, and Muscle Strength—A Cross-Sectional Study in 1274 Older Men](https://www.sciencedirect.com/science/article/abs/pii/S1525861015002947)
+![alt text](image.png)
+
+
+[Effect of partial and total sleep deprivation on serum testosterone in healthy males: a systematic review and meta-analysis](https://pubmed.ncbi.nlm.nih.gov/34801825/)
+
+
+[Effect of 1 Week of Sleep Restriction on Testosterone Levels in Young Healthy Men](https://pmc.ncbi.nlm.nih.gov/articles/PMC4445839/)
+
+![alt text](image-1.png)
+
 ## Stress
 
 ## Alcohol
