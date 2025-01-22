@@ -41,4 +41,8 @@ A small overview of factors having been found to be significant determinants of 
 
 ## Alcohol
 
+[Relationship between Alcohol Consumption and Testosterone Deficiency according to Facial Flushes among Middle-Aged and Older Korean Men](https://pmc.ncbi.nlm.nih.gov/articles/PMC9708857/)
+
+![alt text](image-2.png)
+
 ## Toxins
