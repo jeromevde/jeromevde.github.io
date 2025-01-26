@@ -20,6 +20,8 @@ A small overview of factors having been found to be significant determinants of 
 
 ## Nutrition
 
+![alt text](image-3.png)
+
 ## Bodyfat
 
 ## Social context
