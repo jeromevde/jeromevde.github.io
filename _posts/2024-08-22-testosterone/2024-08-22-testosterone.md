@@ -5,6 +5,12 @@ title: Testosterone
 
 A small overview of factors having been found to be significant determinants of total or free T in men
 
+## Metabolic Pathway
+
+![alt text](image-4.png)
+
+
+
 ## Age
 
 
@@ -21,6 +27,14 @@ A small overview of factors having been found to be significant determinants of 
 ## Nutrition
 
 ![alt text](image-3.png)
+
+### Boron
+
+[Comparative effects of daily and weekly boron supplementation on plasma
+steroid hormones and proinflammatory cytokines](https://pubmed.ncbi.nlm.nih.gov/21129941/)on non-smokers with a mean age of 41.3 ± 7.5 (range 29–50) years and body mass index (BMI) of 25.5 ± 2.2 kg/m2
+![alt text](boron_supp.png)
+
+
 
 ## Bodyfat
 
