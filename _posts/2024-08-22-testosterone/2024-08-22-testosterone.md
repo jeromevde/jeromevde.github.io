@@ -34,7 +34,7 @@ A small overview of factors having been found to be significant determinants of 
 steroid hormones and proinflammatory cytokines](https://pubmed.ncbi.nlm.nih.gov/21129941/)on non-smokers with a mean age of 41.3 ± 7.5 (range 29–50) years and body mass index (BMI) of 25.5 ± 2.2 kg/m2
 ![alt text](boron_supp.png)
 
-
+However, [The Effect of Boron Supplementation on Lean Body Mass, Plasma Testosterone Levels, and Strength in Male Bodybuilders](https://journals.humankinetics.com/view/journals/ijsnem/3/2/article-p140.xml) find no effect
 
 ## Bodyfat
 
