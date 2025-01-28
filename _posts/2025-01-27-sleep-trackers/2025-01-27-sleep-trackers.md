@@ -18,3 +18,7 @@ title: Sleep Trackers
 - quasi perfect estimation of WASO and N1/2 (light sleep) phases
 - slight underestimation of deep sleep
 - slight overestimation of rem sleep
+
+## Whoop
+
+https://pubmed.ncbi.nlm.nih.gov/32713257/
