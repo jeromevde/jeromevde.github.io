@@ -28,6 +28,18 @@ A small overview of factors having been found to be significant determinants of 
 
 ![alt text](image-3.png)
 
+### Zinc
+
+[Effect of some toxic metals in drinking water on male reproductive hormones](https://www.researchgate.net/publication/357216771_Effect_of_some_toxic_metals_in_drinking_water_on_male_reproductive_hormones) and [Association of Mood Disorders with Serum Zinc Concentrations in Adolescent Female Students](https://www.researchgate.net/publication/312146397_Association_of_Mood_Disorders_with_Serum_Zinc_Concentrations_in_Adolescent_Female_Students) produce the following graphs
+
+
+<p float="left">
+  <img src="image-5.png" width="200" />
+  <img src="image-6.png" width="200" /> 
+  <img src="image-7.png" width="200" />
+</p>
+
+
 ### Boron
 
 [Comparative effects of daily and weekly boron supplementation on plasma
@@ -35,6 +47,7 @@ steroid hormones and proinflammatory cytokines](https://pubmed.ncbi.nlm.nih.gov/
 ![alt text](boron_supp.png)
 
 However, [The Effect of Boron Supplementation on Lean Body Mass, Plasma Testosterone Levels, and Strength in Male Bodybuilders](https://journals.humankinetics.com/view/journals/ijsnem/3/2/article-p140.xml) find no effect
+
 
 ## Bodyfat
 
