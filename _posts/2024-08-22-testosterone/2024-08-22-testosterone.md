@@ -53,6 +53,12 @@ However, [The Effect of Boron Supplementation on Lean Body Mass, Plasma Testoste
 
 ## Social context
 
+
+
+[Testosterone eliminates strategic prosocial behavior through impacting choice consistency in healthy males](https://pubmed.ncbi.nlm.nih.gov/37012404)
+
+
+
 ## Sleep
 
 [Sleep Duration and Disturbances Were Associated With Testosterone Level, Muscle Mass, and Muscle Strength—A Cross-Sectional Study in 1274 Older Men](https://www.sciencedirect.com/science/article/abs/pii/S1525861015002947)
