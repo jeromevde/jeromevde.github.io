@@ -51,6 +51,14 @@ However, [The Effect of Boron Supplementation on Lean Body Mass, Plasma Testoste
 
 ## Bodyfat
 
+[Percent body fat was negatively correlated with Testosterone levels in male](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0294567) from 5959 participants from the NHANES 2011–2016
+![alt text](image-8.png)
+
+[Weight Loss in Amateur Wrestlers and Its Effect on Serum Testosterone Levels](https://pmc.ncbi.nlm.nih.gov/articles/PMC4446567/)
+![alt text](<Screenshot 2025-02-03 at 15.48.09.png>)
+
+## Fasting
+
 ## Social context
 
 
