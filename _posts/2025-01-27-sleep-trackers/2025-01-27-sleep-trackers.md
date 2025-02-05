@@ -4,9 +4,19 @@ title: Sleep Trackers
 ---
 
 ## Fitbit charge 3
-[Performance of Fitbit Charge 3 against polysomnography in measuring sleep in adolescent boys and girls](https://www.tandfonline.com/doi/full/10.1080/07420528.2021.1903481)
+
+[Performance of Fitbit Charge 3 against polysomnography in measuring sleep in adolescent boys and girls](https://www.tandfonline.com/doi/full/10.1080/07420528.2021.1903481) where single-night PSG and FC3 sleep outcomes were compared in thirty-nine adolescents (22 girls; 16–19 years), 12 of whom presented with clinical/subclinical DSM-5 insomnia symptoms (7 girls)
 
 ![alt text](charge3.png)
+
+- -10 minutes **total sleep** time bias
+- 10 minutes **WASO** sleep time bias
+- less than -60 min **deep sleep** bias for **higher** deep sleepers
+- negative **light sleep** bias towards **higher** en of light sleeper
+
+![alt text](charge3_distributions.png)
+
+
 
 ## Fitbit
 
