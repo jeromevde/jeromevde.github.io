@@ -44,3 +44,13 @@ title: Sleep Trackers
 ## Whoop
 
 https://pubmed.ncbi.nlm.nih.gov/32713257/
+
+
+## Oura gen3 vs Apple watch Series 8 vs Fitbit sense 2
+[Accuracy of Three Commercial Wearable Devices for Sleep Tracking in Healthy Adults](https://www.mdpi.com/1424-8220/24/20/6532) 
+
+###  Agreement with **Nightly** Summary Estimates
+
+![alt text](image-7.png)
+![alt text](image-8.png)
+![alt text](image-9.png)
