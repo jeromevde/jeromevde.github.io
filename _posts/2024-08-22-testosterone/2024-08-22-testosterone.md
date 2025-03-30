@@ -49,6 +49,10 @@ steroid hormones and proinflammatory cytokines](https://pubmed.ncbi.nlm.nih.gov/
 However, [The Effect of Boron Supplementation on Lean Body Mass, Plasma Testosterone Levels, and Strength in Male Bodybuilders](https://journals.humankinetics.com/view/journals/ijsnem/3/2/article-p140.xml) find no effect
 
 
+### Added Sugar
+
+https://www.youtube.com/watch?v=E9zLBarWDCI
+
 ## Bodyfat
 
 [Percent body fat was negatively correlated with Testosterone levels in male](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0294567) from 5959 participants from the NHANES 2011–2016
