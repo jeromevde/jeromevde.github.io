@@ -1,0 +1,13 @@
+{
+  "name": "jerome-blog",
+  "version": "1.0.0",
+  "description": "A simple JavaScript-based markdown blog",
+  "main": "index.html",
+  "scripts": {
+    "build": "node build.js",
+    "serve": "python3 -m http.server 8080"
+  },
+  "keywords": ["blog", "markdown", "javascript"],
+  "author": "Jerome",
+  "license": "MIT"
+}

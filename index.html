@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jerome's Blog</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .post-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .post-item {
+            background: #f8f9fa;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+        }
+        
+        .post-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+        
+        .post-link {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .post-link:hover {
+            color: #3498db;
+        }
+        
+        .post-date {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        .back-button {
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .back-button:hover {
+            background: #2980b9;
+        }
+        
+        .content {
+            display: none;
+        }
+        
+        .content.active {
+            display: block;
+        }
+        
+        .content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .content pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        
+        .content code {
+            background: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .content pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        .content blockquote {
+            border-left: 4px solid #3498db;
+            margin: 0;
+            padding: 10px 20px;
+            background: #f8f9fa;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .content th, .content td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .content th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="home" class="content active">
+            <h1>Jerome's Blog</h1>
+            <p>Welcome to my personal blog about health, fitness, and biohacking.</p>
+            <div class="loading">Loading posts...</div>
+            <ul id="post-list" class="post-list"></ul>
+        </div>
+        
+        <div id="post-content" class="content">
+            <a href="#" id="back-button" class="back-button">← Back to Home</a>
+            <div id="post-body"></div>
+        </div>
+    </div>
+
+    <script>
+        // Simple markdown parser
+        function parseMarkdown(text) {
+            // Remove Jekyll front matter
+            text = text.replace(/^---[\s\S]*?---\n?/, '');
+            
+            // Headers
+            text = text.replace(/^### (.*$)/gm, '<h3>$1</h3>');
+            text = text.replace(/^## (.*$)/gm, '<h2>$1</h2>');
+            text = text.replace(/^# (.*$)/gm, '<h1>$1</h1>');
+            
+            // Bold and italic
+            text = text.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
+            text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            
+            // Links
+            text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+            
+            // Images
+            text = text.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" />');
+            
+            // Code blocks
+            text = text.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+            
+            // Inline code
+            text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
+            
+            // Lists
+            text = text.replace(/^\* (.*$)/gm, '<li>$1</li>');
+            text = text.replace(/^- (.*$)/gm, '<li>$1</li>');
+            text = text.replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>');
+            
+            // Blockquotes
+            text = text.replace(/^> (.*$)/gm, '<blockquote>$1</blockquote>');
+            
+            // Line breaks
+            text = text.replace(/\n\n/g, '</p><p>');
+            text = '<p>' + text + '</p>';
+            
+            // Clean up empty paragraphs
+            text = text.replace(/<p><\/p>/g, '');
+            text = text.replace(/<p>(<h[1-6]>.*?<\/h[1-6]>)<\/p>/g, '$1');
+            text = text.replace(/<p>(<ul>.*?<\/ul>)<\/p>/gs, '$1');
+            text = text.replace(/<p>(<pre>.*?<\/pre>)<\/p>/gs, '$1');
+            text = text.replace(/<p>(<blockquote>.*?<\/blockquote>)<\/p>/g, '$1');
+            
+            return text;
+        }
+        
+        // Load post index
+        async function loadPostIndex() {
+            try {
+                const response = await fetch('posts-index.json');
+                const posts = await response.json();
+                
+                const postList = document.getElementById('post-list');
+                const loading = document.querySelector('.loading');
+                
+                loading.style.display = 'none';
+                
+                posts.forEach(post => {
+                    const li = document.createElement('li');
+                    li.className = 'post-item';
+                    
+                    const link = document.createElement('a');
+                    link.href = '#';
+                    link.className = 'post-link';
+                    link.textContent = post.title;
+                    link.onclick = (e) => {
+                        e.preventDefault();
+                        loadPost(post.folder, post.filename);
+                    };
+                    
+                    const date = document.createElement('div');
+                    date.className = 'post-date';
+                    date.textContent = post.date;
+                    
+                    li.appendChild(link);
+                    li.appendChild(date);
+                    postList.appendChild(li);
+                });
+                
+            } catch (error) {
+                console.error('Error loading post index:', error);
+                document.querySelector('.loading').textContent = 'Error loading posts. Please make sure to run the build script first.';
+            }
+        }
+        
+        // Load individual post
+        async function loadPost(folder, filename) {
+            try {
+                const response = await fetch(`_posts/${folder}/${filename}`);
+                const markdown = await response.text();
+                
+                const html = parseMarkdown(markdown);
+                document.getElementById('post-body').innerHTML = html;
+                
+                // Update image paths to be relative to the post folder
+                const images = document.querySelectorAll('#post-body img');
+                images.forEach(img => {
+                    if (!img.src.startsWith('http') && !img.src.startsWith('data:')) {
+                        img.src = `_posts/${folder}/${img.getAttribute('src')}`;
+                    }
+                });
+                
+                // Show post content, hide home
+                document.getElementById('home').classList.remove('active');
+                document.getElementById('post-content').classList.add('active');
+                
+            } catch (error) {
+                console.error('Error loading post:', error);
+                document.getElementById('post-body').innerHTML = '<p>Error loading post content.</p>';
+            }
+        }
+        
+        // Back to home
+        document.getElementById('back-button').onclick = (e) => {
+            e.preventDefault();
+            document.getElementById('post-content').classList.remove('active');
+            document.getElementById('home').classList.add('active');
+        };
+        
+        // Initialize
+        loadPostIndex();
+    </script>
+</body>
+</html>

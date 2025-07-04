@@ -1,4 +1,4 @@
-name: Jekyll CI and Deploy
+name: Build and Deploy Blog
 
 on:
   push:
@@ -13,13 +13,16 @@ jobs:
       # Checkout the repository
       - uses: actions/checkout@v4
 
-      # Build the Jekyll site in a Docker container
-      - name: Build the site in the jekyll/builder container
+      # Setup Node.js for the build script
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # Build the blog index
+      - name: Build blog index
         run: |
-          docker run \
-          -v ${{ github.workspace }}:/srv/jekyll \
-          -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-          jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
+          npm run build
 
       # Upload the build artifact for deployment
       - name: Upload artifact
