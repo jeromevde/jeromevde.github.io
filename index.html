@@ -157,55 +157,10 @@
         </div>
     </div>
 
+    <script src="markdown-parser.js"></script>
     <script>
-        // Simple markdown parser
-        function parseMarkdown(text) {
-            // Remove Jekyll front matter
-            text = text.replace(/^---[\s\S]*?---\n?/, '');
-            
-            // Headers
-            text = text.replace(/^### (.*$)/gm, '<h3>$1</h3>');
-            text = text.replace(/^## (.*$)/gm, '<h2>$1</h2>');
-            text = text.replace(/^# (.*$)/gm, '<h1>$1</h1>');
-            
-            // Bold and italic
-            text = text.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
-            text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-            text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
-            
-            // Links
-            text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
-            
-            // Images
-            text = text.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" />');
-            
-            // Code blocks
-            text = text.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
-            
-            // Inline code
-            text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
-            
-            // Lists
-            text = text.replace(/^\* (.*$)/gm, '<li>$1</li>');
-            text = text.replace(/^- (.*$)/gm, '<li>$1</li>');
-            text = text.replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>');
-            
-            // Blockquotes
-            text = text.replace(/^> (.*$)/gm, '<blockquote>$1</blockquote>');
-            
-            // Line breaks
-            text = text.replace(/\n\n/g, '</p><p>');
-            text = '<p>' + text + '</p>';
-            
-            // Clean up empty paragraphs
-            text = text.replace(/<p><\/p>/g, '');
-            text = text.replace(/<p>(<h[1-6]>.*?<\/h[1-6]>)<\/p>/g, '$1');
-            text = text.replace(/<p>(<ul>.*?<\/ul>)<\/p>/gs, '$1');
-            text = text.replace(/<p>(<pre>.*?<\/pre>)<\/p>/gs, '$1');
-            text = text.replace(/<p>(<blockquote>.*?<\/blockquote>)<\/p>/g, '$1');
-            
-            return text;
-        }
+        // Initialize markdown parser
+        const parser = new MarkdownParser();
         
         // Load post index
         async function loadPostIndex() {
@@ -252,16 +207,12 @@
                 const response = await fetch(`_posts/${folder}/${filename}`);
                 const markdown = await response.text();
                 
-                const html = parseMarkdown(markdown);
-                document.getElementById('post-body').innerHTML = html;
+                // Set the base path for images in this post
+                parser.setImageBasePath(`_posts/${folder}/`);
                 
-                // Update image paths to be relative to the post folder
-                const images = document.querySelectorAll('#post-body img');
-                images.forEach(img => {
-                    if (!img.src.startsWith('http') && !img.src.startsWith('data:')) {
-                        img.src = `_posts/${folder}/${img.getAttribute('src')}`;
-                    }
-                });
+                // Parse markdown to HTML
+                const html = parser.parse(markdown);
+                document.getElementById('post-body').innerHTML = html;
                 
                 // Show post content, hide home
                 document.getElementById('home').classList.remove('active');
