@@ -22,19 +22,50 @@ class MarkdownParser {
      * @returns {string} HTML string
      */
     parse(text) {
-        if (!text) return '';
+        if (!text) return { html: '', toc: [] };
 
         // Remove Jekyll front matter
         text = text.replace(/^---[\s\S]*?---\n?/, '');
         
-        // Headers (process from h6 to h1 to avoid conflicts)
-        text = text.replace(/^###### (.*$)/gm, '<h6>$1</h6>');
-        text = text.replace(/^##### (.*$)/gm, '<h5>$1</h5>');
-        text = text.replace(/^#### (.*$)/gm, '<h4>$1</h4>');
-        text = text.replace(/^### (.*$)/gm, '<h3>$1</h3>');
-        text = text.replace(/^## (.*$)/gm, '<h2>$1</h2>');
-        text = text.replace(/^# (.*$)/gm, '<h1>$1</h1>');
-        
+        const toc = [];
+        let idCounter = 0;
+
+        // Process headings and create collapsible sections
+        const lines = text.split('\n');
+        let processedText = '';
+        const openLevels = [];
+
+        const getHeadingLevel = (line) => {
+            if (line.startsWith('### ')) return 3;
+            if (line.startsWith('## ')) return 2;
+            if (line.startsWith('# ')) return 1;
+            return 0;
+        };
+
+        const closeSections = (level) => {
+            while (openLevels.length > 0 && openLevels[openLevels.length - 1] >= level) {
+                processedText += '</details>\n';
+                openLevels.pop();
+            }
+        };
+
+        lines.forEach(line => {
+            const level = getHeadingLevel(line);
+            if (level > 0) {
+                closeSections(level);
+                const title = line.substring(level + 1).trim();
+                const id = `heading-${idCounter++}`;
+                toc.push({ level, text: title, id });
+                processedText += `<details open><summary><h${level} id="${id}">${title}</h${level}></summary>\n`;
+                openLevels.push(level);
+            } else {
+                processedText += line + '\n';
+            }
+        });
+
+        closeSections(1); // Close all remaining open sections
+        text = processedText;
+
         // Bold and italic (process bold+italic first to avoid conflicts)
         text = text.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
         text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
@@ -119,7 +150,7 @@ class MarkdownParser {
         text = text.replace(/<p>(<hr>)<\/p>/g, '$1');
         text = text.replace(/<p>(<table>.*?<\/table>)<\/p>/gs, '$1');
         
-        return text;
+        return { html: text, toc };
     }
 
     /**

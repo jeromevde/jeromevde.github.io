@@ -6,33 +6,61 @@
     <title>Jerome's Blog</title>
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        #toc-container {
+            width: 15%;
+            height: 100vh;
+            overflow-y: auto;
+            position: fixed;
+            top: 0;
+            left: 0;
             padding: 20px;
-            background-color: #f8f9fa;
+            border-right: 1px solid #ddd;
+            background-color: #f8f8f8;
         }
-        
-        .container {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+
+        #toc-container h2 {
+            margin-top: 0;
+            font-size: 1.2rem;
         }
-        
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
+
+        #toc-container ul {
+            list-style: none;
+            padding-left: 0;
         }
-        
-        .post-list {
+
+        #toc-container ul ul {
+            padding-left: 1rem;
+        }
+
+        #toc-container a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            padding: 4px 0;
+            font-size: 0.9rem;
+        }
+
+        #toc-container a:hover {
+            text-decoration: underline;
+        }
+
+        #main-content {
+            flex-grow: 1;
+            padding: 40px;
+            margin-left: 15%; /* Make space for TOC */
+        }
+
+        #post-list {
             list-style: none;
             padding: 0;
         }
-        
+
         .post-item {
             background: #f8f9fa;
             margin: 10px 0;
@@ -41,34 +69,34 @@
             border-left: 4px solid #3498db;
             transition: all 0.3s ease;
         }
-        
+
         .post-item:hover {
             background: #e9ecef;
             transform: translateX(5px);
         }
-        
+
         .post-link {
             text-decoration: none;
             color: #2c3e50;
             font-weight: 500;
         }
-        
+
         .post-link:hover {
             color: #3498db;
         }
-        
+
         .post-date {
             color: #6c757d;
             font-size: 0.9em;
             margin-top: 5px;
         }
-        
+
         .loading {
             text-align: center;
             color: #6c757d;
             font-style: italic;
         }
-        
+
         .back-button {
             background: #3498db;
             color: white;
@@ -80,44 +108,44 @@
             text-decoration: none;
             display: inline-block;
         }
-        
+
         .back-button:hover {
             background: #2980b9;
         }
-        
+
         .content {
             display: none;
         }
-        
+
         .content.active {
             display: block;
         }
-        
+
         .content img {
             max-width: 100%;
             height: auto;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        
+
         .content pre {
             background: #f4f4f4;
             padding: 15px;
             border-radius: 5px;
             overflow-x: auto;
         }
-        
+
         .content code {
             background: #f4f4f4;
             padding: 2px 4px;
             border-radius: 3px;
         }
-        
+
         .content pre code {
             background: none;
             padding: 0;
         }
-        
+
         .content blockquote {
             border-left: 4px solid #3498db;
             margin: 0;
@@ -125,34 +153,67 @@
             background: #f8f9fa;
             border-radius: 0 5px 5px 0;
         }
-        
+
         .content table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
         }
-        
+
         .content th, .content td {
             padding: 10px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
-        
+
         .content th {
             background-color: #f8f9fa;
             font-weight: 600;
         }
+
+        details {
+            margin-bottom: 1rem;
+            border-left: 1px solid #ddd;
+            padding-left: 1rem;
+        }
+
+        summary {
+            cursor: pointer;
+            outline: none;
+            display: flex;
+            align-items: center;
+        }
+
+        summary > h1,
+        summary > h2,
+        summary > h3,
+        summary > h4,
+        summary > h5,
+        summary > h6 {
+            margin: 0.5rem 0;
+            flex-grow: 1;
+        }
+
+        summary::marker {
+            display: none; /* Hide default arrow if it reappears */
+        }
+
+        summary:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div id="home" class="content active">
-            <div class="loading">Loading posts...</div>
-            <ul id="post-list" class="post-list"></ul>
+    <div id="toc-container">
+        <h2>Table of Contents</h2>
+        <ul id="toc-list"></ul>
+    </div>
+    <div id="main-content">
+        <div id="post-list">
+            <!-- Post list will be populated here -->
         </div>
-        
-        <div id="post-content" class="content">
-            <a href="#" id="back-button" class="back-button">← Back to Home</a>
+        <div id="post-content" style="display: none;">
+            <button id="back-button">&larr; Back to list</button>
             <div id="post-body"></div>
         </div>
     </div>
@@ -161,62 +222,113 @@
     <script>
         // Initialize markdown parser
         const parser = new MarkdownParser();
-        
+
+        function displayPostList(posts) {
+            const postList = document.getElementById('post-list');
+            const postContent = document.getElementById('post-content');
+            const tocContainer = document.getElementById('toc-container');
+
+            postList.style.display = 'block';
+            postContent.style.display = 'none';
+            tocContainer.style.display = 'none'; // Hide TOC on main page
+
+            postList.innerHTML = '<h1>Posts</h1><ul>' +
+                posts.map(post => `
+                    <li class="post-item">
+                        <a href="#" class="post-link" onclick="loadPost('${post.folder}', '${post.filename}'); return false;">
+                            ${post.title}
+                        </a>
+                        <div class="post-date">${post.date}</div>
+                    </li>
+                `).join('') +
+                '</ul>';
+        }
+
+        function renderTOC(toc) {
+            const tocList = document.getElementById('toc-list');
+            tocList.innerHTML = '';
+            if (!toc || toc.length === 0) return;
+
+            let currentList = tocList;
+            const listStack = [tocList];
+
+            toc.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<a href="#${item.id}">${item.text}</a>`;
+                
+                if (item.level > listStack.length) {
+                    const newList = document.createElement('ul');
+                    if (currentList.lastChild) {
+                        currentList.lastChild.appendChild(newList);
+                    } else {
+                        currentList.appendChild(newList);
+                    }
+                    listStack.push(newList);
+                    currentList = newList;
+                } else if (item.level < listStack.length) {
+                    while(item.level < listStack.length) {
+                        listStack.pop();
+                    }
+                    currentList = listStack[listStack.length - 1];
+                }
+
+                if (currentList) {
+                    currentList.appendChild(listItem);
+                }
+            });
+
+            // Add smooth scrolling
+            document.querySelectorAll('#toc-list a').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(this.getAttribute('href'));
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        }
+
         // Load post index
         async function loadPostIndex() {
             try {
                 const response = await fetch('posts-index.json');
                 const posts = await response.json();
-                
-                const postList = document.getElementById('post-list');
-                const loading = document.querySelector('.loading');
-                
-                loading.style.display = 'none';
-                
-                posts.forEach(post => {
-                    const li = document.createElement('li');
-                    li.className = 'post-item';
-                    
-                    const link = document.createElement('a');
-                    link.href = '#';
-                    link.className = 'post-link';
-                    link.textContent = post.title;
-                    link.onclick = (e) => {
-                        e.preventDefault();
-                        loadPost(post.folder, post.filename);
-                    };
-                    
-                    const date = document.createElement('div');
-                    date.className = 'post-date';
-                    date.textContent = post.date;
-                    
-                    li.appendChild(link);
-                    li.appendChild(date);
-                    postList.appendChild(li);
-                });
-                
+                displayPostList(posts);
             } catch (error) {
                 console.error('Error loading post index:', error);
-                document.querySelector('.loading').textContent = 'Error loading posts. Please make sure to run the build script first.';
+                const postList = document.getElementById('post-list');
+                if(postList) postList.innerHTML = 'Error loading posts. Please make sure to run the build script first.';
             }
         }
         
         // Load individual post
         async function loadPost(folder, filename) {
             try {
-                const response = await fetch(`_posts/${folder}/${filename}`);
-                const markdown = await response.text();
-                
-                // Set the base path for images in this post
-                parser.setImageBasePath(`_posts/${folder}/`);
-                
-                // Parse markdown to HTML
-                const html = parser.parse(markdown);
-                document.getElementById('post-body').innerHTML = html;
-                
-                // Show post content, hide home
-                document.getElementById('home').classList.remove('active');
-                document.getElementById('post-content').classList.add('active');
+                const postList = document.getElementById('post-list');
+                const postContent = document.getElementById('post-content');
+                const postBody = document.getElementById('post-body');
+                const tocContainer = document.getElementById('toc-container');
+
+                postList.style.display = 'none';
+                postContent.style.display = 'block';
+                tocContainer.style.display = 'block';
+
+                const postPath = `_posts/${folder}/${filename}`;
+                const imageBasePath = `_posts/${folder}/`;
+
+                const response = await fetch(postPath);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const text = await response.text();
+
+                parser.setImageBasePath(imageBasePath);
+                const { html, toc } = parser.parse(text);
+                postBody.innerHTML = html;
+                renderTOC(toc);
                 
             } catch (error) {
                 console.error('Error loading post:', error);
@@ -224,12 +336,16 @@
             }
         }
         
-        // Back to home
-        document.getElementById('back-button').onclick = (e) => {
-            e.preventDefault();
-            document.getElementById('post-content').classList.remove('active');
-            document.getElementById('home').classList.add('active');
-        };
+        // Back to list
+        document.getElementById('back-button').addEventListener('click', () => {
+            const postList = document.getElementById('post-list');
+            const postContent = document.getElementById('post-content');
+            const tocContainer = document.getElementById('toc-container');
+
+            postList.style.display = 'block';
+            postContent.style.display = 'none';
+            tocContainer.style.display = 'none';
+        });
         
         // Initialize
         loadPostIndex();
