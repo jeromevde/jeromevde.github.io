@@ -15,23 +15,42 @@
         #toc-container {
             width: 15%;
             height: 100vh;
+            min-height: 100vh;
+            max-height: 100vh;
             overflow-y: auto;
             position: fixed;
             top: 0;
             left: 0;
-            padding: 20px;
+            padding: 20px 10px 20px 20px;
             border-right: 1px solid #ddd;
             background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #toc-list {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        #toc-list > li {
+            flex: 1 1 0;
         }
 
         #toc-container h2 {
-            margin-top: 0;
-            font-size: 1.2rem;
+            display: none;
         }
 
         #toc-container ul {
             list-style: none;
             padding-left: 0;
+            margin: 0;
         }
 
         #toc-container ul ul {
@@ -42,12 +61,26 @@
             text-decoration: none;
             color: #333;
             display: block;
-            padding: 4px 0;
-            font-size: 0.9rem;
+            padding: 12px 0 12px 0;
+            font-size: 1.25rem;
+            font-weight: 700;
         }
-
-        #toc-container a:hover {
-            text-decoration: underline;
+        #toc-container ul ul > li > a {
+            font-size: 1.05rem;
+            font-weight: 500;
+            padding: 10px 0 10px 0;
+        }
+        #toc-container ul ul ul > li > a {
+            font-size: 0.95rem;
+            font-weight: 400;
+            color: #666;
+            padding: 8px 0 8px 0;
+        }
+        #toc-container ul ul ul ul > li > a {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #aaa;
+            padding: 6px 0 6px 0;
         }
 
         #main-content {
@@ -121,11 +154,14 @@
             display: block;
         }
 
-        .content img {
+        .content img, #post-body img {
             max-width: 100%;
             height: auto;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .content pre {
@@ -201,11 +237,24 @@
         summary:hover {
             text-decoration: underline;
         }
+
+        #post-body {
+            width: 70vw;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
+        }
+        @media (max-width: 900px) {
+            #post-body {
+                width: 100vw;
+                max-width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
     <div id="toc-container">
-        <h2>Table of Contents</h2>
         <ul id="toc-list"></ul>
     </div>
     <div id="main-content">
@@ -213,7 +262,6 @@
             <!-- Post list will be populated here -->
         </div>
         <div id="post-content" style="display: none;">
-            <button id="back-button">&larr; Back to list</button>
             <div id="post-body"></div>
         </div>
     </div>
@@ -222,6 +270,20 @@
     <script>
         // Initialize markdown parser
         const parser = new MarkdownParser();
+
+        function updateURL(folder, filename) {
+            const url = `#post/${encodeURIComponent(folder)}/${encodeURIComponent(filename)}`;
+            window.location.hash = url;
+        }
+
+        function parseHash() {
+            const hash = window.location.hash;
+            const match = hash.match(/^#post\/([^/]+)\/(.+)$/);
+            if (match) {
+                return { folder: decodeURIComponent(match[1]), filename: decodeURIComponent(match[2]) };
+            }
+            return null;
+        }
 
         function displayPostList(posts) {
             const postList = document.getElementById('post-list');
@@ -232,16 +294,25 @@
             postContent.style.display = 'none';
             tocContainer.style.display = 'none'; // Hide TOC on main page
 
-            postList.innerHTML = '<h1>Posts</h1><ul>' +
-                posts.map(post => `
-                    <li class="post-item">
-                        <a href="#" class="post-link" onclick="loadPost('${post.folder}', '${post.filename}'); return false;">
-                            ${post.title}
-                        </a>
+            postList.innerHTML = posts.map(post => `
+                    <li class="post-item post-link" tabindex="0" data-folder="${post.folder}" data-filename="${post.filename}">
+                        <span class="post-title">${post.title}</span>
                         <div class="post-date">${post.date}</div>
                     </li>
                 `).join('') +
                 '</ul>';
+
+            // Add event listeners for navigation
+            document.querySelectorAll('.post-item.post-link').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    updateURL(this.dataset.folder, this.dataset.filename);
+                });
+                item.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        updateURL(this.dataset.folder, this.dataset.filename);
+                    }
+                });
+            });
         }
 
         function renderTOC(toc) {
@@ -329,26 +400,29 @@
                 const { html, toc } = parser.parse(text);
                 postBody.innerHTML = html;
                 renderTOC(toc);
-                
             } catch (error) {
                 console.error('Error loading post:', error);
                 document.getElementById('post-body').innerHTML = '<p>Error loading post content.</p>';
             }
         }
-        
-        // Back to list
-        document.getElementById('back-button').addEventListener('click', () => {
-            const postList = document.getElementById('post-list');
-            const postContent = document.getElementById('post-content');
-            const tocContainer = document.getElementById('toc-container');
 
-            postList.style.display = 'block';
-            postContent.style.display = 'none';
-            tocContainer.style.display = 'none';
+        // Handle hash change for navigation
+        window.addEventListener('hashchange', () => {
+            const parsed = parseHash();
+            if (parsed) {
+                loadPost(parsed.folder, parsed.filename);
+            } else {
+                loadPostIndex();
+            }
         });
-        
+
         // Initialize
-        loadPostIndex();
+        const parsed = parseHash();
+        if (parsed) {
+            loadPost(parsed.folder, parsed.filename);
+        } else {
+            loadPostIndex();
+        }
     </script>
 </body>
 </html>
