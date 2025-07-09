@@ -285,7 +285,9 @@
             return null;
         }
 
+        let allPosts = [];
         function displayPostList(posts) {
+            allPosts = posts;
             const postList = document.getElementById('post-list');
             const postContent = document.getElementById('post-content');
             const tocContainer = document.getElementById('toc-container');
@@ -294,25 +296,55 @@
             postContent.style.display = 'none';
             tocContainer.style.display = 'none'; // Hide TOC on main page
 
-            postList.innerHTML = posts.map(post => `
-                    <li class="post-item post-link" tabindex="0" data-folder="${post.folder}" data-filename="${post.filename}">
-                        <span class="post-title">${post.title}</span>
-                        <div class="post-date">${post.date}</div>
-                    </li>
-                `).join('') +
-                '</ul>';
+            // Only create the search bar if it doesn't exist
+            let searchBar = document.getElementById('search-bar');
+            if (!searchBar) {
+                searchBar = document.createElement('input');
+                searchBar.type = 'text';
+                searchBar.id = 'search-bar';
+                searchBar.placeholder = 'Search posts...';
+                searchBar.style.cssText = 'width:100%;padding:10px 12px;margin-bottom:20px;font-size:1.1rem;border-radius:5px;border:1px solid #ccc;box-sizing:border-box;';
+                postList.insertBefore(searchBar, postList.firstChild);
+            }
 
-            // Add event listeners for navigation
-            document.querySelectorAll('.post-item.post-link').forEach(item => {
-                item.addEventListener('click', function(e) {
+            let filteredPosts = posts;
+            if (searchBar.value.trim() !== '') {
+                const q = searchBar.value.trim().toLowerCase();
+                filteredPosts = posts.filter(post =>
+                    post.title.toLowerCase().includes(q) ||
+                    (post.date && post.date.toLowerCase().includes(q))
+                );
+            }
+
+            // Remove all post items before rendering
+            Array.from(postList.querySelectorAll('.post-item.post-link')).forEach(el => el.remove());
+
+            // Render filtered posts
+            filteredPosts.forEach(post => {
+                const li = document.createElement('li');
+                li.className = 'post-item post-link';
+                li.tabIndex = 0;
+                li.dataset.folder = post.folder;
+                li.dataset.filename = post.filename;
+                li.innerHTML = `<span class="post-title">${post.title}</span><div class="post-date">${post.date}</div>`;
+                li.addEventListener('click', function() {
                     updateURL(this.dataset.folder, this.dataset.filename);
                 });
-                item.addEventListener('keydown', function(e) {
+                li.addEventListener('keydown', function(e) {
                     if (e.key === 'Enter' || e.key === ' ') {
                         updateURL(this.dataset.folder, this.dataset.filename);
                     }
                 });
+                postList.appendChild(li);
             });
+
+            // Attach search event only once
+            if (!searchBar._searchHandlerAttached) {
+                searchBar.addEventListener('input', function() {
+                    displayPostList(allPosts);
+                });
+                searchBar._searchHandlerAttached = true;
+            }
         }
 
         function renderTOC(toc) {
