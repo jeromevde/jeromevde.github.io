@@ -1,4 +1,4 @@
-# Jerome's Blog
+# A Blog
 
 A simple, JavaScript-based markdown blog that parses and displays markdown files without requiring Jekyll or any build tools beyond Node.js.
 
@@ -55,54 +55,3 @@ npm run serve
 ```
 
 This will start a local HTTP server on port 8080. Open `http://localhost:8080` in your browser.
-
-## Post Format
-
-Posts can include Jekyll front matter for metadata:
-
-```markdown
----
-layout: post
-title: Your Post Title
----
-
-# Your Post Content
-
-Your markdown content here...
-```
-
-Or use standard markdown headers:
-
-```markdown
-# Your Post Title
-
-Your markdown content here...
-```
-
-## Deployment
-
-Since this is a static site, you can deploy it to any static hosting service:
-
-- **GitHub Pages**: Just push to your repository
-- **Netlify**: Connect your repository and deploy
-- **Vercel**: Connect your repository and deploy
-- **Any static hosting**: Upload the files to your web server
-
-Make sure to run `npm run build` before deploying to ensure the post index is up to date.
-
-## Benefits Over Jekyll
-
-- **No Ruby dependencies**: Just Node.js for the build script
-- **Faster development**: No need to wait for Jekyll to rebuild
-- **Simpler deployment**: Just static files, no server-side processing
-- **Better performance**: Pure JavaScript, no server-side rendering needed
-- **Easier maintenance**: Fewer dependencies and moving parts
-
-- **Project Repository**: If the repository is not named `<username>.github.io`, the blog will be accessible at `https://<username>.github.io/<repository-name>/`.  
-  Example: If the repository is `my-blog`, the blog URL will be `https://johndoe.github.io/my-blog/`.
-
-- **Custom Domain**: To use a custom domain:
-  1. Add a `CNAME` file to the root of the `gh-pages` branch containing your domain name (e.g., `www.example.com`).
-  2. Configure your DNS settings to point to GitHub Pages' servers.
-
-To verify the deployment URL, go to **Settings** → **Pages** in your repository. The URL will be displayed there.
