@@ -1,32 +1,6 @@
 # A Blog
 
-A simple, JavaScript-based markdown blog that parses and displays markdown files without requiring Jekyll or any build tools beyond Node.js.
-
-## Features
-
-- **Pure JavaScript**: No Jekyll, no Ruby dependencies
-- **Markdown Support**: Automatic parsing of markdown files with support for:
-  - Headers (H1, H2, H3)
-  - Bold and italic text
-  - Links and images
-  - Code blocks and inline code
-  - Lists and blockquotes
-  - Tables
-- **Responsive Design**: Clean, modern UI that works on all devices
-- **Automatic Indexing**: Build script automatically generates an index of all posts
-
-## Structure
-
-```
-├── index.html          # Main application file
-├── build.js            # Build script to generate post index
-├── package.json        # Project configuration
-├── posts-index.json    # Generated index of all posts
-└── _posts/             # Blog posts directory
-    └── YYYY-MM-DD-title/
-        ├── post.md     # Main post content
-        └── assets/     # Images and other assets
-```
+A simple, JavaScript-based markdown blog that parses and displays markdown files without into a blog
 
 ## Usage
 
