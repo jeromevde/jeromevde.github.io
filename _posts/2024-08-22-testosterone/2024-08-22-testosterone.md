@@ -9,19 +9,27 @@ A small overview of factors having been found to be significant determinants of 
 
 ![alt text](image-4.png)
 
-Adrenal glands:
-- **Cholesterol** → **Pregnenolone** (serves as a precursor for steroid hormones)
-- **Pregnenolone** → **DHEA** (weak androgen, supports energy and immune function)
 
-Peripheral tissues:
-- **DHEA** → **Androstenediol** (weak androgen, minor contributor to estrogen production)
-- **DHEA** → **Androstenedione** (weak androgen, precursor to testosterone)
-- **Androstenedione** → **Testosterone** (promotes muscle growth, libido, and secondary sexual characteristics)
-- **Testosterone** → **Estradiol** (regulates reproductive and bone health in both sexes)
-- **Testosterone** → **5α-DHT** (enhances male hair growth, prostate function)
-- **5α-Androstanedione** → **5α-DHT** (same as above)
+- **Cholesterol**: Precursor for all steroid hormones.
+- **Pregnenolone**: Precursor for androgens, estrogens, corticosteroids.
+- **17α-Hydroxypregnenolone**: Intermediate to DHEA (Δ5 pathway).
+- **Progesterone**: Precursor for androgens/corticosteroids; supports reproduction.
+- **17α-Hydroxyprogesterone**: Intermediate to androstenedione (Δ4 pathway).
+- **DHEA**: Weak androgen; supports energy, immunity; precursor for testosterone/estrogens.
+- **Androstenedione**: Weak androgen; precursor to testosterone/estrogens.
+- **Testosterone**: Promotes muscle growth, libido, secondary sexual characteristics, bone health.
+- **Estradiol**: Regulates reproductive and bone health in both sexes.
+- **5α-DHT**: Enhances male hair growth, prostate function.
 
-Interestingly, the final conversion to testosterone happens in peripheral tissues...
+Pathways:
+
+- **Δ5 Pathway (Testes) [50–60%]**: Cholesterol → Pregnenolone → 17α-Hydroxypregnenolone → DHEA → Androstenedione → Testosterone
+- **Δ4 Pathway (Testes) [30–40%]**: Cholesterol → Pregnenolone → Progesterone → 17α-Hydroxyprogesterone → Androstenedione → Testosterone
+- **Adrenal Pathway [5–10%]**: Cholesterol → Pregnenolone → DHEA → Androstenedione
+- **Peripheral Pathway [5–10%]**: DHEA → Androstenedione → Testosterone → Estradiol / 5α-DHT
+
+
+**Notes**: Testes produce ~90–95% of male testosterone (Δ5 + Δ4). Adrenal/peripheral pathways contribute 5–10%, more in females. Peripheral conversion of testosterone to **estradiol** (via aromatase) and **5α-DHT** (via 5α-reductase) occurs in tissues like fat, skin, and prostate.
 
 ## Age
 
