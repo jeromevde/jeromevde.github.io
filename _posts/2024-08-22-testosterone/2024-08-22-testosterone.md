@@ -21,7 +21,7 @@ Peripheral tissues:
 - **Testosterone** → **5α-DHT** (enhances male hair growth, prostate function)
 - **5α-Androstanedione** → **5α-DHT** (same as above)
 
-
+Interestingly, the final conversion to testosterone happens in peripheral tissues...
 
 ## Age
 
