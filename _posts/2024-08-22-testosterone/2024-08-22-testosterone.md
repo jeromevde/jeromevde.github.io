@@ -9,6 +9,18 @@ A small overview of factors having been found to be significant determinants of 
 
 ![alt text](image-4.png)
 
+Adrenal glands:
+- **Cholesterol** → **Pregnenolone** (serves as a precursor for steroid hormones)
+- **Pregnenolone** → **DHEA** (weak androgen, supports energy and immune function)
+
+Peripheral tissues:
+- **DHEA** → **Androstenediol** (weak androgen, minor contributor to estrogen production)
+- **DHEA** → **Androstenedione** (weak androgen, precursor to testosterone)
+- **Androstenedione** → **Testosterone** (promotes muscle growth, libido, and secondary sexual characteristics)
+- **Testosterone** → **Estradiol** (regulates reproductive and bone health in both sexes)
+- **Testosterone** → **5α-DHT** (enhances male hair growth, prostate function)
+- **5α-Androstanedione** → **5α-DHT** (same as above)
+
 
 
 ## Age
